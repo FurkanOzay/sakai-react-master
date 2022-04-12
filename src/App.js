@@ -28,8 +28,8 @@ import TreeDemo from './components/TreeDemo';
 import InvalidStateDemo from './components/InvalidStateDemo';
 import BlocksDemo from './components/BlocksDemo';
 import IconsDemo from './components/IconsDemo';
-import Kitaplik from './components/Kitaplik';
 import Kutuphane from './components/Kutuphane';
+import Liste from './components/Liste';
 
 import Crud from './pages/Crud';
 import EmptyPage from './pages/EmptyPage';
@@ -48,6 +48,10 @@ import './assets/layout/layout.scss';
 import './App.scss';
 
 const App = () => {
+
+   
+
+
     const [layoutMode, setLayoutMode] = useState('static');
     const [layoutColorMode, setLayoutColorMode] = useState('light')
     const [inputStyle, setInputStyle] = useState('outlined');
@@ -167,8 +171,8 @@ const App = () => {
         {
             label: 'Araçlar', icon: 'pi pi-fw pi-sitemap',
             items: [
-                { label: 'Kitap Ekleme', icon: 'pi pi-fw pi-list', to: '/kitaplik'},
                 { label: 'Kütüphane', icon: 'pi pi-fw pi-list', to: '/kutuphane'},
+                { label: 'Liste', icon: 'pi pi-fw pi-list', to: '/liste'},
                 { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', to: '/formlayout' },
                 { label: 'Input', icon: 'pi pi-fw pi-check-square', to: '/input' },
                 { label: "Float Label", icon: "pi pi-fw pi-bookmark", to: "/floatlabel" },
@@ -323,8 +327,8 @@ const App = () => {
                     <Route path="/crud" component={Crud} />
                     <Route path="/empty" component={EmptyPage} />
                     <Route path="/documentation" component={Documentation} />
-                    <Route path="/kitaplik" component={Kitaplik}/>
                     <Route path="/kutuphane" component={Kutuphane}/>
+                    <Route path="/liste" component={Liste}/>
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode} />
