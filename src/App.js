@@ -49,9 +49,6 @@ import './App.scss';
 
 const App = () => {
 
-   
-
-
     const [layoutMode, setLayoutMode] = useState('static');
     const [layoutColorMode, setLayoutColorMode] = useState('light')
     const [inputStyle, setInputStyle] = useState('outlined');
@@ -169,10 +166,10 @@ const App = () => {
             }]
         },
         {
-            label: 'Araçlar', icon: 'pi pi-fw pi-sitemap',
+            label: 'Kütüphane', icon: 'pi pi-fw pi-sitemap',
             items: [
-                { label: 'Kütüphane', icon: 'pi pi-fw pi-list', to: '/kutuphane'},
-                { label: 'Liste', icon: 'pi pi-fw pi-list', to: '/liste'},
+                { label: 'Kitap Listesi', icon: 'pi pi-fw pi-list', to: '/liste'},
+                /* { label: 'Kütüphane', icon: 'pi pi-fw pi-list', to: '/kutuphane'},
                 { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', to: '/formlayout' },
                 { label: 'Input', icon: 'pi pi-fw pi-check-square', to: '/input' },
                 { label: "Float Label", icon: "pi pi-fw pi-bookmark", to: "/floatlabel" },
@@ -188,10 +185,10 @@ const App = () => {
                 { label: 'Message', icon: 'pi pi-fw pi-comment', to: '/messages' },
                 { label: 'File', icon: 'pi pi-fw pi-file', to: '/file' },
                 { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', to: '/chart' },
-                { label: 'Misc', icon: 'pi pi-fw pi-circle-off', to: '/misc' },
+                { label: 'Misc', icon: 'pi pi-fw pi-circle-off', to: '/misc' }, */
             ]
         },
-        {
+        /* {
             label: 'UI Blocks',
             items: [
                 { label: 'Free Blocks', icon: 'pi pi-fw pi-eye', to: '/blocks', badge: "NEW" },
@@ -263,7 +260,7 @@ const App = () => {
                 { label: 'Documentation', icon: 'pi pi-fw pi-question', command: () => { window.location = "#/documentation" } },
                 { label: 'View Source', icon: 'pi pi-fw pi-search', command: () => { window.location = "https://github.com/primefaces/sakai-react" } }
             ]
-        }
+        } */
     ];
 
     const addClass = (element, className) => {

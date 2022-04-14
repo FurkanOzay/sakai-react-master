@@ -48,6 +48,14 @@ const DialogDemo = () => {
         );
     }
 
+   
+
+    const toast = useRef(null);
+
+    const onUpload = () => {
+        toast.current.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
+    }
+
     const [selectButtonValue1, setSelectButtonValue1] = useState(null);
     const [selectButtonValue2, setSelectButtonValue2] = useState(null);
     const [inputNumberValue, setInputNumberValue] = useState(null);
@@ -60,10 +68,14 @@ const DialogDemo = () => {
         { name: "Bilim", code: "O3" },
     ];
 
-    const toast = useRef(null);
+    const [kitapAdi, setkitapAdi] = useState("");
+    const [kitapSayfa, setkitapSayfa] = useState("");
+    const [yazar, setYazar] = useState("");
 
-    const onUpload = () => {
-        toast.current.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
+    
+
+    const add = () => {
+
     }
 
     return (
@@ -79,7 +91,7 @@ const DialogDemo = () => {
 
                     <div className="field">
                         <label htmlFor="kitapAdi">Kitap Adı</label>
-                        <InputText id="kitapAdi" type="text" />
+                        <InputText id="kitapAdi" type="text" value={kitapAdi} onChange={e => setkitapAdi(e.target.value)}/>
                     </div>
 
                     <div className="field">
@@ -88,15 +100,19 @@ const DialogDemo = () => {
                     </div>
 
                     <div className="field">
-                        <h5>Sayfa Sayısı</h5>
+                        <label>Sayfa Sayısı</label>
                         <InputNumber value={inputNumberValue} onValueChange={(e) => setInputNumberValue(e.value)} showButtons mode="decimal"></InputNumber>
                     </div>
 
                     <div className="field">
-                        <label htmlFor="ozetMetin">Özet Metin</label>
-                        <InputTextarea id="ozetMetin" autoResize rows="10" cols="0" />
+                        <label>Yazar</label>
+                        <InputText id="yazar" type="text" value={yazar} onChange={e => setYazar(e.target.value)}/>
                     </div>
+
+                    
+
                 </div>
+                <Button  label="Ekle" icon="pi pi-check" />
             </div>
 
             <div className="col-12 md:col-6">
