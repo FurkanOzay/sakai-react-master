@@ -3,6 +3,8 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import Liste from "./Liste";
+import { Dropdown } from 'primereact/dropdown';
 
 const DialogDemo = () => {
     const [displayBasic, setDisplayBasic] = useState(false);
@@ -39,7 +41,7 @@ const DialogDemo = () => {
 
     const renderFooter = (name) => {
         return (
-            <div>
+            <div>                
                 <Button label="Hayır" icon="pi pi-times" onClick={() => onHide(name)} className="p-button-text" />
                 <Button label="Evet" icon="pi pi-check" onClick={() => onHide(name)} autoFocus />
             </div>
@@ -47,7 +49,6 @@ const DialogDemo = () => {
     };
 
     const toast = useRef(null);
-
 
 
     const [kitaplar, setKitaplar] = useState([]);
@@ -59,13 +60,14 @@ const DialogDemo = () => {
     }, []);
 
 
-   
     return (
         <div className="dialog-demo">
             <Button style={{ backgroundColor: "orange" }} label="Kitap Düzenle" icon="pi pi-external-link" onClick={() => onClick("displayMaximizable")} />
-
             <Dialog header="Düzenle" visible={displayMaximizable} maximizable modal style={{ width: "50vw" }} footer={renderFooter("displayMaximizable")} onHide={() => onHide("displayMaximizable")}>
-              
+            
+ 
+
+
             </Dialog>
         </div>
     );

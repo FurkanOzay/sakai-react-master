@@ -5,7 +5,7 @@ import { Chart } from "primereact/chart";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { ProductService } from "../service/ProductService";
-import Kutuphane from "./Kutuphane";
+import Add from "./Add";
 import Liste from "./Liste";
 import BookDelete from "./bookDelete";
 import BookEdit from "./bookEdit";
@@ -141,7 +141,7 @@ const Dashboard = (props) => {
                     </div>
                     <div className="flex justify-content-space-around mb-3">
                         <div className="flex align-items-center ">
-                            <Kutuphane />
+                            <Add />
                         </div>
                         <div className="flex align-items-center ml-2">
                             <BookEdit />

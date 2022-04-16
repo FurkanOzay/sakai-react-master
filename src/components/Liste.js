@@ -6,7 +6,11 @@ import { InputText } from "primereact/inputtext";
 
 const DataTableSizeDemo = () => {
     const [kitaplar, setKitaplar] = useState([]);
-
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: 'React POST Request Example' })
+    };
     useEffect(() => {
         fetch("http://localhost:8080/api/kitaps")
             .then((response) => response.json())
@@ -15,7 +19,7 @@ const DataTableSizeDemo = () => {
 
     const cellEditor = (options) => {
 
-        console.log("Options : ", options)
+        console.log("Options : ", options.field)
 
         if (options.field === 'price')
             return priceEditor(options);
@@ -86,14 +90,14 @@ const DataTableSizeDemo = () => {
         <div>
 
             <div className="card">
-                <DataTable value={kitaplar}  size="small" editMode="cell" responsiveLayout="scroll" >
-                    
-                    <Column field="id" header="Kitap ID" editor={(options) => cellEditor(options)} ></Column>
-                    <Column field="kitap_adi" header="Kitap Adı" editor={(options) => cellEditor(options)}  ></Column>
-                    <Column field="kitap_sayfa" header="Sayfa Sayısı" editor={(options) => cellEditor(options)}></Column>
-                    <Column field="kitap_kategori" header="Kategori" editor={(options) => cellEditor(options)}></Column>
-                    <Column field="kitap_resim_url" header="Resim" editor={(options) => cellEditor(options)}></Column>
-                    <Column field="yazar" header="Yazar" editor={(options) => cellEditor(options)}></Column>
+               
+                <DataTable value={kitaplar} scrollable scrollHeight="400px" responsiveLayout="scroll">
+                    <Column field="id"  header="Kitap ID" ></Column>
+                    <Column field="kitap_adi" header="Kitap Adı"></Column>
+                    <Column field="kitap_sayfa" header="Sayfa Sayısı"></Column>
+                    <Column field="kitap_kategori" header="Kategori"></Column>
+                    <Column field="kitap_resim_url" header="Resim"></Column>
+                    <Column field="yazar" header="Yazar"></Column>
                 </DataTable>
             </div>
 

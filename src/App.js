@@ -28,7 +28,7 @@ import TreeDemo from './components/TreeDemo';
 import InvalidStateDemo from './components/InvalidStateDemo';
 import BlocksDemo from './components/BlocksDemo';
 import IconsDemo from './components/IconsDemo';
-import Kutuphane from './components/Kutuphane';
+import Add from './components/Add';
 import Liste from './components/Liste';
 
 import Crud from './pages/Crud';
@@ -324,7 +324,7 @@ const App = () => {
                     <Route path="/crud" component={Crud} />
                     <Route path="/empty" component={EmptyPage} />
                     <Route path="/documentation" component={Documentation} />
-                    <Route path="/kutuphane" component={Kutuphane}/>
+                    <Route path="/Add" component={Add}/>
                     <Route path="/liste" component={Liste}/>
                 </div>
 
