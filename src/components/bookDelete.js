@@ -70,7 +70,19 @@ const DialogDemo = () => {
             .then((response) => setKitaplar(response));
     }, []);
 
-    
+    const add = (e) => {
+        const kitap = {kitap_adi, kitap_kategori, kitap_resim_url, kitap_sayfa, yazar};
+        fetch('http://localhost:8080/api/add', {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            },
+            body: JSON.stringify(kitap)
+        }).then(() => {
+            
+        })
+    };
 
     const add = () => {
 
