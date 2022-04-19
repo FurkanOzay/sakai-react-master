@@ -1,10 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-import Liste from "./Liste";
 import { Dropdown } from 'primereact/dropdown';
+import { Skeleton } from 'primereact/skeleton';
 
 const DialogDemo = () => {
     const [displayBasic, setDisplayBasic] = useState(false);
@@ -41,7 +39,7 @@ const DialogDemo = () => {
 
     const renderFooter = (name) => {
         return (
-            <div>                
+            <div>
                 <Button label="Hayır" icon="pi pi-times" onClick={() => onHide(name)} className="p-button-text" />
                 <Button label="Evet" icon="pi pi-check" onClick={() => onHide(name)} autoFocus />
             </div>
@@ -54,19 +52,35 @@ const DialogDemo = () => {
     const [kitaplar, setKitaplar] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/kitaps")
+        fetch("http://localhost:8080/api/kitaps", {
+            method: 'GET',
+            header: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            }
+        })
             .then((response) => response.json())
             .then((response) => setKitaplar(response));
     }, []);
 
 
+
+
+    
+    const [selectedBooks, setSelectedBooks] = useState(null);
+
+    
+    const onCityChange = (e) => {
+        setSelectedBooks(e.value);
+    }
+
     return (
         <div className="dialog-demo">
             <Button style={{ backgroundColor: "orange" }} label="Kitap Düzenle" icon="pi pi-external-link" onClick={() => onClick("displayMaximizable")} />
             <Dialog header="Düzenle" visible={displayMaximizable} maximizable modal style={{ width: "50vw" }} footer={renderFooter("displayMaximizable")} onHide={() => onHide("displayMaximizable")}>
-            
- 
 
+
+                <Dropdown style={{width:'100%'}}  value={selectedBooks} options={kitaplar}  onChange={onCityChange} optionLabel="kitap_adi" placeholder="Lütfen Bir Kitap Seçiniz" />
 
             </Dialog>
         </div>

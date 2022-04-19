@@ -29,6 +29,7 @@ const DialogDemo = () => {
     };
 
     const onClick = (name, position) => {
+        console.log("Açıldı");
         dialogFuncMap[`${name}`](true);
 
         if (position) {

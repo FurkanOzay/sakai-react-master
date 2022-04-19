@@ -1,16 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
-import { InputText } from "primereact/inputtext";
-import { InputTextarea } from "primereact/inputtextarea";
-import { SelectButton } from "primereact/selectbutton";
-import { InputNumber } from "primereact/inputnumber";
-import { Image } from "primereact/image";
-import { FileUpload } from 'primereact/fileupload';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { ProductService } from '../service/ProductService';
-import { Toast } from 'primereact/toast';
+import { getElRoot } from '@fullcalendar/core';
+
 
 
 const DialogDemo = () => {
@@ -21,11 +15,6 @@ const DialogDemo = () => {
     const [displayPosition, setDisplayPosition] = useState(false);
     const [displayResponsive, setDisplayResponsive] = useState(false);
     const [position, setPosition] = useState('center');
-
-
-    const [products, setProducts] = useState([]);
-    const [selectedProducts7, setSelectedProducts7] = useState(null);
-
 
     const dialogFuncMap = {
         'displayBasic': setDisplayBasic,
@@ -48,21 +37,61 @@ const DialogDemo = () => {
         dialogFuncMap[`${name}`](false);
     }
 
+
+
+    const toCapitalize = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    const isSelectable = (value, field) => {
+        let isSelectable = true;
+        switch (field) {
+            case 'quantity':
+                isSelectable = value > 10;
+                break;
+            case 'name':
+            case 'category':
+                isSelectable = value.startsWith('B') || value.startsWith('A');
+                break;
+
+            default:
+                break;
+        }
+        return isSelectable;
+    }
+
+    const isRowSelectable = (event) => {
+        const data = event.data;
+        return isSelectable(data.quantity, 'quantity');
+    }
+
+    const isCellSelectable = (event) => {
+        const data = event.data;
+        return isSelectable(data.value, data.field);
+    }
+
+    const rowClassName = (data) => {
+        return isSelectable(data.quantity, 'quantity') ? '' : 'p-disabled';
+    }
+
+    const cellClassName = (value, options) => {
+        const { field } = options.column.props;
+        return isSelectable(value, field) ? '' : 'p-disabled';
+    }
+
     const renderFooter = (name) => {
         return (
             <div>
-                <Button style={{backgroundColor:'blue', color:'white'}} label="Vazgeç" icon="pi pi-times" onClick={() => onHide(name)} className="p-button-text" />
-                <Button style={{backgroundColor:'red', color:'white'}} label="Sil" icon="pi pi-check" onClick={() => onHide(name)} autoFocus />
+                <Button style={{ backgroundColor: 'blue', color: 'white' }} label="Vazgeç" icon="pi pi-times" onClick={() => onHide(name)} className="p-button-text" />
+                <Button style={{ backgroundColor: 'red', color: 'white' }} label="Sil" onClick={() => click(selectedBooks)} icon="pi pi-check" autoFocus />
             </div>
         );
     }
-    const toast = useRef(null);
 
-    const onUpload = () => {
-        toast.current.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
-    }
+    const [selectedBooks, setSelectedBooks] = useState(null);
 
     const [kitaplar, setKitaplar] = useState([]);
+
 
     useEffect(() => {
         fetch("http://localhost:8080/api/kitaps")
@@ -70,46 +99,46 @@ const DialogDemo = () => {
             .then((response) => setKitaplar(response));
     }, []);
 
-    const add = (e) => {
-        const kitap = {kitap_adi, kitap_kategori, kitap_resim_url, kitap_sayfa, yazar};
-        fetch('http://localhost:8080/api/add', {
-            method: 'DELETE',
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*"
-            },
-            body: JSON.stringify(kitap)
-        }).then(() => {
-            
-        })
-    };
+    const click = (selectedBooks) => {
+        
+       console.log("Kitap Id: " , selectedBooks.id);
+        
+       fetch('http://localhost:8080/api/delete', {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+        },
+        body: JSON.stringify(selectedBooks)
+    }).then(() => {
+       
+    })
 
-    const add = () => {
 
-    }
-
+    }   
     return (
+        
         <div className="dialog-demo">
-                <Button style={{backgroundColor:'red'}} label="Kitap Sil" icon="pi pi-external-link" onClick={() => onClick('displayMaximizable')} />
-                
-                <Dialog header="Düzenle" visible={displayMaximizable} maximizable modal style={{ width: '50vw' }} footer={renderFooter('displayMaximizable')} onHide={() => onHide('displayMaximizable')}>
-                    
+            <Button style={{ backgroundColor: 'red' }} label="Kitap Sil" icon="pi pi-external-link" onClick={() => onClick('displayMaximizable')} />
+
+            <Dialog header="Düzenle" visible={displayMaximizable} maximizable modal style={{ width: '50vw' }} footer={renderFooter('displayMaximizable')} onHide={() => onHide('displayMaximizable')}>
+
                 <div>
-                <h6>Silmek İstediğiniz Kitabı Seçiniz</h6>
-                <DataTable value={kitaplar} selection={selectedProducts7} onSelectionChange={e => setSelectedProducts7(e.value)} dataKey="id" responsiveLayout="scroll">
-                    <Column selectionMode="multiple" headerStyle={{width: '3em'}}></Column>
-                    <Column field="id" header="ID"></Column>
+                <h6>RadioButton-Only Selection</h6>
+                <DataTable value={kitaplar} selectionMode="radiobutton" selection={selectedBooks} onSelectionChange={e => setSelectedBooks(e.value)} dataKey="id" responsiveLayout="scroll">
+                    <Column selectionMode="single" headerStyle={{width: '3em'}}></Column>
+                    <Column field="id" header="Id"></Column>
                     <Column field="kitap_adi" header="Kitap Adı"></Column>
-                    <Column field="kitap_sayfa" header="Sayfa Sayısı"></Column>
                     <Column field="kitap_kategori" header="Kategori"></Column>
-                    <Column field="kitap_resim_url" header="Resim"></Column>
+                    <Column field="kitap_sayfa" header="Sayfa"></Column>
                     <Column field="yazar" header="Yazar"></Column>
                 </DataTable>
-            </div>
 
-                </Dialog>
+                </div>
 
-            </div>
+            </Dialog>
+        </div>
+
     )
 }
 
