@@ -3,8 +3,7 @@ import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { getElRoot } from '@fullcalendar/core';
-
+import { Toast } from "primereact/toast";
 
 
 const DialogDemo = () => {
@@ -83,13 +82,13 @@ const DialogDemo = () => {
         return (
             <div>
                 <Button style={{ backgroundColor: 'blue', color: 'white' }} label="Vazgeç" icon="pi pi-times" onClick={() => onHide(name)} className="p-button-text" />
-                <Button style={{ backgroundColor: 'red', color: 'white' }} label="Sil" onClick={() => click(selectedBooks)} icon="pi pi-check" autoFocus />
+                <Button style={{ backgroundColor: 'red', color: 'white' }} label="Sil" onClick={() => click(selectedBooks) + onHide(name)} icon="pi pi-check" autoFocus />
             </div>
         );
     }
 
     const [selectedBooks, setSelectedBooks] = useState(null);
-
+    const toastRef = useRef();
     const [kitaplar, setKitaplar] = useState([]);
 
 
@@ -111,7 +110,11 @@ const DialogDemo = () => {
         },
         body: JSON.stringify(selectedBooks)
     }).then(() => {
-       
+        if(selectedBooks.id) {
+            toastRef.current.show({severity: 'info', summary: 'Başarılı', detail: selectedBooks.id + " silindi"});
+        }else{
+            toastRef.current.show({severity: 'error', summary: 'Hata!', detail: "Silinme işlemi başarısız"});
+        }
     })
 
 
@@ -119,6 +122,7 @@ const DialogDemo = () => {
     return (
         
         <div className="dialog-demo">
+            <Toast ref={toastRef} />
             <Button style={{ backgroundColor: 'red' }} label="Kitap Sil" icon="pi pi-external-link" onClick={() => onClick('displayMaximizable')} />
 
             <Dialog header="Düzenle" visible={displayMaximizable} maximizable modal style={{ width: '50vw' }} footer={renderFooter('displayMaximizable')} onHide={() => onHide('displayMaximizable')}>

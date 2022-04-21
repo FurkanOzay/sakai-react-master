@@ -3,12 +3,14 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { useRef } from "react";
 import { InputText } from "primereact/inputtext";
-import { InputTextarea } from "primereact/inputtextarea";
-import { SelectButton } from "primereact/selectbutton";
 import { InputNumber } from "primereact/inputnumber";
-import { Image } from "primereact/image";
-import { FileUpload } from "primereact/fileupload";
-import { Component } from "react/cjs/react.production.min";
+import { InputTextarea } from 'primereact/inputtextarea';
+import { Toast } from "primereact/toast";
+import { FileUpload } from 'primereact/fileupload';
+import { ProgressBar } from 'primereact/progressbar';
+import { Tooltip } from 'primereact/tooltip';
+import { Tag } from 'primereact/tag';
+
 
 const DialogDemo = () => {
     const [displayBasic, setDisplayBasic] = useState(false);
@@ -46,21 +48,22 @@ const DialogDemo = () => {
         return (
             <div>
                 <Button label="Vazgeç" icon="pi pi-times" onClick={() => onHide(name)} className="p-button-text" />
-                <Button label="Ekle" icon="pi pi-check" onClick={() => add()} autoFocus />
+                <Button label="Ekle" icon="pi pi-check" onClick={() => add() + onHide(name)} autoFocus />
             </div>
         );
     };
 
-    const toast = useRef(null);
-
+    const toastRef = useRef();
+    const [id, setId] = useState("");
     const [kitap_adi, setkitapAdi] = useState("");
     const [kitap_kategori, setKitapKategori] = useState("");
+    const [kitap_aciklama, setKitapAciklama] = useState("");
     const [kitap_resim_url, SetKitap_resim_url] = useState("");
     const [kitap_sayfa, setkitapSayfa] = useState("");
     const [yazar, setYazar] = useState("");
 
     const add = (e) => {
-        const kitap = {kitap_adi, kitap_kategori, kitap_resim_url, kitap_sayfa, yazar};
+        const kitap = {id, kitap_adi, kitap_kategori,kitap_aciklama, kitap_resim_url, kitap_sayfa, yazar};
         fetch('http://localhost:8080/api/add', {
             method: 'POST',
             headers: {
@@ -69,31 +72,37 @@ const DialogDemo = () => {
             },
             body: JSON.stringify(kitap)
         }).then(() => {
-            
+            if(kitap_adi) {
+                toastRef.current.show({severity: 'info', summary: 'Başarılı', detail: kitap_adi + " eklendi"});
+            }else{
+                toastRef.current.show({severity: 'error', summary: 'Hata!', detail: "Ekleme işlemi başarısız"});
+            }
         })
     };
 
-    
 
     
 
     return (
         <div className="dialog-demo">
+            <Toast ref={toastRef} />
             <Button label="Kitap Ekle" icon="pi pi-external-link" onClick={() => onClick("displayMaximizable")} />
-
             <Dialog visible={displayMaximizable} maximizable modal style={{ width: "50vw" }} footer={renderFooter("displayMaximizable")} onHide={() => onHide("displayMaximizable")}>
                 <div className="col-12 md:col-12">
                     <div className="p-fluid">
                         <h5>Kitap Bilgileri</h5>
-
                         <div className="field">
                             <label htmlFor="kitap_adi">Kitap Adı</label>
-                            <InputText id="kitap_adi" type="text" value={kitap_adi} onChange={(e) => setkitapAdi(e.target.value)} />
+                            <InputText id="kitap_adi" type="text" value={kitap_adi}  onChange={(e) => setkitapAdi(e.target.value)} />
                         </div>
 
                         <div className="field">
                             <label htmlFor="kitap_kategori">Kitap Kategorisi</label>
                             <InputText id="kitap_kategori" type="text" value={kitap_kategori} onChange={(e) => setKitapKategori(e.target.value)} />
+                        </div>
+                        <div className="field">
+                            <label htmlFor="kitap_aciklama">Kitap Özet/Açıklama</label>
+                            <InputTextarea  value={kitap_aciklama} onChange={(e) => setKitapAciklama(e.target.value)}  rows={5} cols={30}  />
                         </div>
                         <div className="field">
                             <label htmlFor="kitap_resim_url">Kitap Resim Yolu</label>

@@ -17,19 +17,7 @@ const DataTableSizeDemo = () => {
             .then((response) => setKitaplar(response));
     }, []);
 
-    const cellEditor = (options) => {
 
-        console.log("Options : ", options.field)
-
-        if (options.field === 'price')
-            return priceEditor(options);
-        else
-            return textEditor(options);
-    }
-
-    const priceEditor = (options) => {
-        return <InputNumber value={options.value} onValueChange={(e) => options.editorCallback(e.value)} mode="currency" currency="USD" locale="en-US" />
-    }
 
     const textEditor = (options) => {
         return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
