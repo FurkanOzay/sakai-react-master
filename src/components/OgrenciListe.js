@@ -5,16 +5,16 @@ import { InputNumber } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
 
 const DataTableSizeDemo = () => {
-    const [kitaplar, setKitaplar] = useState([]);
+    const [ogrenciler, setOgrenciler] = useState([]);
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: 'React POST Request Example' })
     };
     useEffect(() => {
-        fetch("http://localhost:8080/api/kitaps")
+        fetch("http://localhost:8080/apio/ogrencis")
             .then((response) => response.json())
-            .then((response) => setKitaplar(response));
+            .then((response) => setOgrenciler(response));
     }, []);
 
 
@@ -79,14 +79,12 @@ const DataTableSizeDemo = () => {
 
             <div className="card">
                
-                <DataTable value={kitaplar} scrollable scrollHeight="400px" responsiveLayout="scroll">
-                    <Column field="id"  header="ID" ></Column>
-                    <Column field="kitap_adi" header="Kitap Adı"></Column>
-                    <Column field="kitap_sayfa" header="Sayfa Sayısı"></Column>
-                    <Column field="kitap_kategori" header="Kategori"></Column>
-                    <Column field="kitap_resim_url" header="Resim"></Column>
-                    <Column field="yazar" header="Yazar"></Column>
-                    <Column field="kitap_adet" header="Adet"></Column>
+                <DataTable value={ogrenciler} scrollable scrollHeight="400px" responsiveLayout="scroll">
+                    <Column field="ogr_id"  header="ID" ></Column>
+                    <Column field="ogr_no" header="Numara"></Column>
+                    <Column field="ogr_ad_soyad" header="Ad Soyad"></Column>
+                    <Column field="ogr_bolum" header="Bölüm"></Column>
+                    <Column field="ogr_sinif" header="Sınıf"></Column>
                 </DataTable>
             </div>
 

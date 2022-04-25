@@ -82,36 +82,36 @@ const DialogDemo = () => {
         return (
             <div>
                 <Button style={{ backgroundColor: 'blue', color: 'white' }} label="Vazgeç" icon="pi pi-times" onClick={() => onHide(name)} className="p-button-text" />
-                <Button style={{ backgroundColor: 'red', color: 'white' }} label="Sil" onClick={() => click(selectedBooks) + onHide(name)} icon="pi pi-check" autoFocus />
+                <Button style={{ backgroundColor: 'red', color: 'white' }} label="Sil" onClick={() => click(selectedStudents) + onHide(name)} icon="pi pi-check" autoFocus />
             </div>
         );
     }
 
-    const [selectedBooks, setSelectedBooks] = useState(null);
+    const [selectedStudents, setSelectedStudents] = useState(null);
     const toastRef = useRef();
-    const [kitaplar, setKitaplar] = useState([]);
+    const [ogrenciler, setOgrenciler] = useState([]);
 
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/kitaps")
+        fetch("http://localhost:8080/apio/ogrencis")
             .then((response) => response.json())
-            .then((response) => setKitaplar(response));
+            .then((response) => setOgrenciler(response));
     }, []);
 
-    const click = (selectedBooks) => {
+    const click = (selectedStudents) => {
         
-       console.log("Kitap Id: " , selectedBooks.id);
+       console.log("Öğrenci Id: " , selectedStudents.ogr_id);
         
-       fetch('http://localhost:8080/api/delete', {
+       fetch('http://localhost:8080/apio/delete', {
         method: 'DELETE',
         headers: {
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*"
         },
-        body: JSON.stringify(selectedBooks)
+        body: JSON.stringify(selectedStudents)
     }).then(() => {
-        if(selectedBooks.id) {
-            toastRef.current.show({severity: 'info', summary: 'Başarılı', detail: selectedBooks.id + " silindi"});
+        if(selectedStudents.ogr_id) {
+            toastRef.current.show({severity: 'info', summary: 'Başarılı', detail: selectedStudents.ogr_id + " silindi"});
         }else{
             toastRef.current.show({severity: 'error', summary: 'Hata!', detail: "Silinme işlemi başarısız"});
         }
@@ -123,19 +123,19 @@ const DialogDemo = () => {
         
         <div className="dialog-demo">
             <Toast ref={toastRef} />
-            <Button style={{ backgroundColor: 'red' }} label="Kitap Sil" icon="pi pi-external-link" onClick={() => onClick('displayMaximizable')} />
+            <Button style={{ backgroundColor: 'red' }} label="Öğrenci Sil" icon="pi pi-external-link" onClick={() => onClick('displayMaximizable')} />
 
-            <Dialog header="Düzenle" visible={displayMaximizable} maximizable modal style={{ width: '50vw' }} footer={renderFooter('displayMaximizable')} onHide={() => onHide('displayMaximizable')}>
+            <Dialog header="Sil" visible={displayMaximizable} maximizable modal style={{ width: '50vw' }} footer={renderFooter('displayMaximizable')} onHide={() => onHide('displayMaximizable')}>
 
                 <div>
-                <h6>Kitap Silme Ekranı</h6>
-                <DataTable value={kitaplar} selectionMode="radiobutton" selection={selectedBooks} onSelectionChange={e => setSelectedBooks(e.value)} dataKey="id" responsiveLayout="scroll">
+                <h6>Öğrenci Silme Ekranı</h6>
+                <DataTable value={ogrenciler} selectionMode="radiobutton" selection={selectedStudents} onSelectionChange={e => setSelectedStudents(e.value)} dataKey="ogr_id" responsiveLayout="scroll">
                     <Column selectionMode="single" headerStyle={{width: '3em'}}></Column>
-                    <Column field="id" header="Id"></Column>
-                    <Column field="kitap_adi" header="Kitap Adı"></Column>
-                    <Column field="kitap_kategori" header="Kategori"></Column>
-                    <Column field="kitap_sayfa" header="Sayfa"></Column>
-                    <Column field="yazar" header="Yazar"></Column>
+                    <Column field="ogr_id" header="Id"></Column>
+                    <Column field="ogr_no" header="Numara"></Column>
+                    <Column field="ogr_ad_soyad" header="Ad Soyad"></Column>
+                    <Column field="ogr_bolum" header="Bölüm"></Column>
+                    <Column field="ogr_sinif" header="Sınıf"></Column>
                 </DataTable>
 
                 </div>

@@ -5,6 +5,10 @@ import Add from "./Add";
 import Liste from "./Liste";
 import BookDelete from "./bookDelete";
 import BookEdit from "./bookEdit";
+import OgrenciListe from "./OgrenciListe";
+import OgrenciAdd from "./OgrenciAdd";
+import StudentEdit from "./StudentEdit";
+import StudentsDelete from "./StudentsDelete";
 
 
 const lineData = {
@@ -116,11 +120,17 @@ const Dashboard = (props) => {
         return value.toLocaleString("en-US", { style: "currency", currency: "USD" });
     };
     const [kitaplar, setKitaplar] = useState([]);
+    const [ogrenciler, setOgrenciler] = useState([]);
 
     useEffect(() => {
         fetch("http://localhost:8080/api/kitaps")
             .then((response) => response.json())
             .then((response) => setKitaplar(response));
+    }, []);
+    useEffect(() => {
+        fetch("http://localhost:8080/apio/ogrencis")
+            .then((response) => response.json())
+            .then((response) => setOgrenciler(response));
     }, []);
 
     const toast = useRef(null);
@@ -151,7 +161,7 @@ const Dashboard = (props) => {
                     <div className="flex justify-content-between mb-3">
                         <div>
                             <span className="block text-500 font-medium mb-3">Güncel Kitap Stoğu :</span>
-                            <div className="text-900 font-medium text-xl">Adet : {kitaplar.length}</div>
+                            <div className="text-900 font-medium text-xl">Kitap Adeti : {kitaplar.length}</div>
                         </div>
                         <div className="flex align-items-center justify-content-center bg-gray-100 border-round" style={{ width: "2.5rem", height: "2.5rem" }}>
                             <i className="pi pi-bookmark-fill text-dark-500 text-xl" />
@@ -175,8 +185,8 @@ const Dashboard = (props) => {
                 <div className="card mb-0">
                     <div className="flex justify-content-between mb-3">
                         <div>
-                            <span className="block text-500 font-medium mb-3">Öğrenci Sayısı</span>
-                            <div className="text-900 font-medium text-xl">124 | (Dinamik Değil)</div>
+                            <span className="block text-500 font-medium mb-3">Güncel Öğrenci Sayısı</span>
+                            <div className="text-900 font-medium text-xl">Öğrenci Sayısı : {ogrenciler.length}</div>
                         </div>
                         <div className="flex align-items-center justify-content-center bg-orange-100 border-round" style={{width: '2.5rem', height: '2.5rem'}}>
                             <i className="pi pi-user-minus text-orange-500 text-xl"/>
@@ -184,17 +194,15 @@ const Dashboard = (props) => {
                     </div>
                     <div className="flex justify-content-space-around mb-3">
                         <div className="flex align-items-center ">
-                            <Button label="Öğrenci Ekle" />
+                            <OgrenciAdd />
                         </div>
                         <div className="flex align-items-center ml-2">
-                            <Button label="Öğrenci Düzenle"/>
+                            <StudentEdit />
                         </div>
                         <div className="flex align-items-center ml-2">
-                            <Button label="Öğrenci Sil"/>
+                            <StudentsDelete />
                         </div>
-                        <div className="flex align-items-center ml-2">
-                        <Button type="button" onClick={showConfirm} label="Confirm" className="ui-button-warning" />
-                        </div>
+
                     </div>
                 </div>
                 
@@ -202,23 +210,17 @@ const Dashboard = (props) => {
 
             <div className="col-12 xl:col-6">
                 <div className="card">
-                    <h5>Son Kayıtlar</h5>
+                    <h5>Son Kitap Kayıtları</h5>
                     <Liste />
                 </div>
             </div>
-
             
             <div className="col-12 xl:col-6">
-                
-
                 <div className="card">
-                    <div className="flex align-items-center justify-content-between mb-4">
-                        <h5>Öğrenci Kayıtları</h5>
-                    </div>
-                    <p>Buraya Öğrenci Kayıtları Gelecek</p>
+                    <h5>Son Öğrenci Kayıtları</h5>
+                    <OgrenciListe />
                 </div>
-            </div> 
-            
+            </div>
         </div>
     );
 };

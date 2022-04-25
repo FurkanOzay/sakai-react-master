@@ -30,6 +30,7 @@ import BlocksDemo from './components/BlocksDemo';
 import IconsDemo from './components/IconsDemo';
 import Add from './components/Add';
 import Liste from './components/Liste';
+import Atama from './components/Atama';
 
 import Crud from './pages/Crud';
 import EmptyPage from './pages/EmptyPage';
@@ -169,8 +170,8 @@ const App = () => {
             label: 'Kütüphane', icon: 'pi pi-fw pi-sitemap',
             items: [
                 { label: 'Kitap Listesi', icon: 'pi pi-fw pi-list', to: '/liste'},
-                /* { label: 'Kütüphane', icon: 'pi pi-fw pi-list', to: '/kutuphane'},
-                { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', to: '/formlayout' },
+                { label: 'Kitap Atama', icon: 'pi pi-fw pi-id-card', to: '/atama' },
+               /* { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', to: '/formlayout' },
                 { label: 'Input', icon: 'pi pi-fw pi-check-square', to: '/input' },
                 { label: "Float Label", icon: "pi pi-fw pi-bookmark", to: "/floatlabel" },
                 { label: "Invalid State", icon: "pi pi-fw pi-exclamation-circle", to: "invalidstate" },
@@ -188,7 +189,7 @@ const App = () => {
                 { label: 'Misc', icon: 'pi pi-fw pi-circle-off', to: '/misc' }, */
             ]
         },
-        /* {
+       /* {
             label: 'UI Blocks',
             items: [
                 { label: 'Free Blocks', icon: 'pi pi-fw pi-eye', to: '/blocks', badge: "NEW" },
@@ -326,6 +327,7 @@ const App = () => {
                     <Route path="/documentation" component={Documentation} />
                     <Route path="/Add" component={Add}/>
                     <Route path="/liste" component={Liste}/>
+                    <Route path="/atama" component={Atama}/>
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode} />
