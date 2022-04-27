@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { InputNumber } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
+
 
 const DataTableSizeDemo = () => {
     const [kitaplar, setKitaplar] = useState([]);
@@ -16,13 +16,6 @@ const DataTableSizeDemo = () => {
             .then((response) => response.json())
             .then((response) => setKitaplar(response));
     }, []);
-
-
-
-    const textEditor = (options) => {
-        return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
-    }
-
     const isPositiveInteger = (val) => {
         let str = String(val);
         str = str.trim();
@@ -72,6 +65,7 @@ const DataTableSizeDemo = () => {
     // empty dependency array means this effect will only run once (like componentDidMount in classes)
     }, []); */
 
+
     return (
 
 
@@ -84,9 +78,9 @@ const DataTableSizeDemo = () => {
                     <Column field="kitap_adi" header="Kitap Adı"></Column>
                     <Column field="kitap_sayfa" header="Sayfa Sayısı"></Column>
                     <Column field="kitap_kategori" header="Kategori"></Column>
-                    <Column field="kitap_resim_url" header="Resim"></Column>
                     <Column field="yazar" header="Yazar"></Column>
-                    <Column field="kitap_adet" header="Adet"></Column>
+                    <Column field="kitap_adeti" header="Adet"></Column>
+                    <Column field="mevcut_kitap" header="Mevcut"></Column>
                 </DataTable>
             </div>
 

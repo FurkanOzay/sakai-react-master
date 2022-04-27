@@ -72,6 +72,8 @@ const DialogDemo = () => {
     const [kitap_resim_url, setKitapResimUrl] = useState("");
     const [kitap_sayfa, setKitapSayfa] = useState("");
     const [yazar, setYazar] = useState("");
+    const [kitap_adet, setKitapAdet] = useState("");
+    const [mevcut_kitap, setMevcutKitap] = useState("");
 
     
     const [selectedBooks, setSelectedBooks] = useState(null);
@@ -86,10 +88,12 @@ const DialogDemo = () => {
         setKitapResimUrl(e.target.value.kitap_resim_url)
         setKitapSayfa(e.target.value.kitap_sayfa)
         setYazar(e.target.value.yazar)
+        setKitapAdet(e.target.value.kitap_adet);
+        setMevcutKitap(e.target.value.mevcut_kitap)
     }
 
 const update = (e) => {
-        const kitap = {id, kitap_adi, kitap_kategori,kitap_aciklama, kitap_resim_url, kitap_sayfa, yazar};
+        const kitap = {id, kitap_adi, kitap_kategori,kitap_aciklama, kitap_resim_url, kitap_sayfa, yazar, kitap_adet, mevcut_kitap};
         console.warn("kitap", kitap)
         fetch(`http://localhost:8080/api/update/`, {
             method: 'PUT',
@@ -158,6 +162,14 @@ const toastRef = useRef();
                             <label>Yazar</label>
                             <InputText id="yazar" type="text" value={yazar} onChange={(e) => setYazar(e.target.value)} />
                         </div>
+                        <div className="field">
+                            <label>Adet</label>
+                            <InputNumber value={kitap_adet} onValueChange={(e) => setKitapAdet(e.value)} showButtons mode="decimal"></InputNumber>
+                        </div>
+                        <div className="field">
+                            <label>Mevcut Kitap</label>
+                            <InputNumber value={mevcut_kitap} onValueChange={(e) => setMevcutKitap(e.value)} showButtons mode="decimal"></InputNumber>
+                        </div>
                     </div>
                 </div>
             </Dialog>
@@ -165,8 +177,6 @@ const toastRef = useRef();
     );
 };
 
-const comparisonFn = function (prevProps, nextProps) {
-    return prevProps.location.pathname === nextProps.location.pathname;
-};
+
 
 export default React.memo(DialogDemo);

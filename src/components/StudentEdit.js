@@ -2,10 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { Dropdown } from 'primereact/dropdown';
-import { InputNumber } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
-import { InputTextarea } from 'primereact/inputtextarea';
 
 
 const DialogDemo = () => {
@@ -70,6 +68,8 @@ const DialogDemo = () => {
     const [ogr_ad_soyad, setOgrAdSoyad] = useState("");
     const [ogr_bolum, setOgrBolum] = useState("");
     const [ogr_sinif, setOgrSinif] = useState("");
+    const [kitap_sayisi, setKitapSayisi] = useState("")
+
 
     
     const [selectedStudents, setSelectedStudents] = useState(null);
@@ -82,6 +82,7 @@ const DialogDemo = () => {
         setOgrAdSoyad(e.target.value.ogr_ad_soyad)
         setOgrBolum(e.target.value.ogr_bolum)
         setOgrSinif(e.target.value.ogr_sinif)
+        setKitapSayisi(e.target.value.kitap_sayisi)
     }
 
 const update = (e) => {
@@ -143,6 +144,10 @@ const toastRef = useRef();
                             <label htmlFor="ogr_sinif">Öğrenci Sınıf</label>
                             <InputText id="ogr_sinif" type="text" value={ogr_sinif} onChange={(e) => setOgrSinif(e.target.value)} />
                         </div>
+                        <div className="field">
+                            <label htmlFor="kitap_sayisi">Kitap Sayısı</label>
+                            <InputText id="kitap_sayisi" type="text" value={kitap_sayisi} onChange={(e) => setKitapSayisi(e.target.value)} />
+                        </div>
                     </div>
                 </div>
             </Dialog>
@@ -150,8 +155,5 @@ const toastRef = useRef();
     );
 };
 
-const comparisonFn = function (prevProps, nextProps) {
-    return prevProps.location.pathname === nextProps.location.pathname;
-};
 
 export default React.memo(DialogDemo);

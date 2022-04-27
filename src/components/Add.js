@@ -6,10 +6,7 @@ import { InputText } from "primereact/inputtext";
 import { InputNumber } from "primereact/inputnumber";
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Toast } from "primereact/toast";
-import { FileUpload } from 'primereact/fileupload';
-import { ProgressBar } from 'primereact/progressbar';
-import { Tooltip } from 'primereact/tooltip';
-import { Tag } from 'primereact/tag';
+
 
 
 const DialogDemo = () => {
@@ -61,9 +58,11 @@ const DialogDemo = () => {
     const [kitap_resim_url, SetKitap_resim_url] = useState("");
     const [kitap_sayfa, setkitapSayfa] = useState("");
     const [yazar, setYazar] = useState("");
+    const [kitap_adeti, setKitapAdeti] = useState("")
+    const [mevcut_kitap, setMevcutKitap] = useState("")
 
     const add = (e) => {
-        const kitap = {id, kitap_adi, kitap_kategori,kitap_aciklama, kitap_resim_url, kitap_sayfa, yazar};
+        const kitap = {id, kitap_adi, kitap_kategori,kitap_aciklama, kitap_resim_url, kitap_sayfa, yazar, kitap_adeti, mevcut_kitap};
         fetch('http://localhost:8080/api/add', {
             method: 'POST',
             headers: {
@@ -112,10 +111,17 @@ const DialogDemo = () => {
                             <label>Sayfa Sayısı</label>
                             <InputNumber value={kitap_sayfa} onValueChange={(e) => setkitapSayfa(e.value)} showButtons mode="decimal"></InputNumber>
                         </div>
-
                         <div className="field">
                             <label>Yazar</label>
                             <InputText id="yazar" type="text" value={yazar} onChange={(e) => setYazar(e.target.value)} />
+                        </div>
+                        <div className="field">
+                            <label>Kitap Adeti</label>
+                            <InputNumber value={kitap_adeti} onValueChange={(e) => setKitapAdeti(e.value)} showButtons mode="decimal"></InputNumber>
+                        </div>
+                        <div className="field">
+                            <label>Mevcut Kitap</label>
+                            <InputNumber value={mevcut_kitap} onValueChange={(e) => setMevcutKitap(e.value)} showButtons mode="decimal"></InputNumber>
                         </div>
                     </div>
                 </div>

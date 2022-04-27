@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button } from "primereact/button";
-import { ProductService } from "../service/ProductService";
+
 import Add from "./Add";
 import Liste from "./Liste";
 import BookDelete from "./bookDelete";
@@ -103,10 +103,6 @@ const Dashboard = (props) => {
         setLineOptions(lineOptions);
     };
 
-    useEffect(() => {
-        const productService = new ProductService();
-        productService.getProductsSmall().then((data) => setProducts(data));
-    }, []);
 
     useEffect(() => {
         if (props.colorMode === "light") {
